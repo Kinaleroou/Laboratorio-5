@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="572.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ricardofigueroa.controllers.MenuProductoController">
+   <children>
+      <ImageView fitHeight="581.0" fitWidth="1028.0">
+         <image>
+            <Image url="@../images/fondo.jpeg" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="14.0" layoutY="151.0" prefHeight="279.0" prefWidth="175.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="10.0" prefWidth="260.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="0.0" prefWidth="0.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnAgregarP" mnemonicParsing="false" onAction="#agregar" prefHeight="168.0" prefWidth="421.0" stylesheets="@../resources/KwikiMarkCSS.css" text="AGREGAR" GridPane.halignment="CENTER">
+               <graphic>
+                  <ImageView fx:id="imgAgregarP" fitHeight="49.0" fitWidth="65.0">
+                     <image>
+                        <Image url="@../images/agregarUsuario.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="button3" />
+                  <String fx:value="button2" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnEliminarP" mnemonicParsing="false" onAction="#eliminar" prefHeight="123.0" prefWidth="315.0" stylesheets="@../resources/KwikiMarkCSS.css" text="ELIMINAR" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <graphic>
+                  <ImageView fx:id="imgEliminarP" fitHeight="49.0" fitWidth="67.0">
+                     <image>
+                        <Image url="@../images/EliminarCliente.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="button2" />
+                  <String fx:value="button3" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnEditarP" mnemonicParsing="false" onAction="#editar" prefHeight="106.0" prefWidth="298.0" stylesheets="@../resources/KwikiMarkCSS.css" text="EDITAR" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <graphic>
+                  <ImageView fx:id="imgEditarP" fitHeight="59.0" fitWidth="53.0">
+                     <image>
+                        <Image url="@../images/editarClientes.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="button2" />
+                  <String fx:value="button3" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnReportesP" mnemonicParsing="false" onAction="#reporte" prefHeight="68.0" prefWidth="196.0" stylesheets="@../resources/KwikiMarkCSS.css" text="REPORTES" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <graphic>
+                  <ImageView fx:id="imgReportesP" fitHeight="55.0" fitWidth="77.0">
+                     <image>
+                        <Image url="@../images/reportecliente.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="button2" />
+                  <String fx:value="button3" />
+               </styleClass>
+            </Button>
+         </children>
+      </GridPane>
+      <GridPane layoutX="202.0" layoutY="50.0" prefHeight="80.0" prefWidth="612.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Producto Id" />
+            <Label text="Descripcion" GridPane.columnIndex="2" />
+            <TextField fx:id="txtNombreP" GridPane.columnIndex="5" />
+            <Label text="Nombre" GridPane.columnIndex="4" />
+            <TextField fx:id="txtProductoId" GridPane.columnIndex="1" />
+            <TextField fx:id="txtDescripcionProducto" GridPane.columnIndex="3" />
+            <Label text="Precio Compra" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <TextField fx:id="txtPrecioCompra" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label text="Cantidad Stock" GridPane.rowIndex="1" />
+            <TextField fx:id="txtCantidadStock" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Precio Mayor" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="txtPrecioMayor" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="195.0" layoutY="136.0" prefHeight="30.0" prefWidth="93.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="25.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Distribuidor id" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="202.0" layoutY="181.0" prefHeight="30.0" prefWidth="79.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="25.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label text="Categoria Id" />
+         </children>
+      </GridPane>
+      <TableView fx:id="tblProductos" layoutX="202.0" layoutY="239.0" onMouseClicked="#seleccionarDatos" prefHeight="311.0" prefWidth="817.0" stylesheets="@../resources/KwikiMarkCSS.css">
+        <columns>
+          <TableColumn fx:id="colProductoId" prefWidth="87.0" text="ProductoID" />
+          <TableColumn fx:id="colNombreP" prefWidth="69.0" text="NombreProducto" />
+            <TableColumn fx:id="colDescripcionProducto" prefWidth="103.0" text="DescripcionProducto" />
+            <TableColumn fx:id="colCantidadStock" prefWidth="94.0" text="CantidadStock" />
+            <TableColumn fx:id="colPrecioMayor" prefWidth="157.0" text="PrecioMayor" />
+            <TableColumn fx:id="colPrecioCompra" prefWidth="102.0" text="PrecioCompra" />
+            <TableColumn fx:id="colCategoriaProductoId" prefWidth="102.0" text="Categoria" />
+            <TableColumn fx:id="colImagen" prefWidth="102.0" text="Imagen" />
+            <TableColumn fx:id="colDistribuidorId" prefWidth="102.0" text="Distribuidor" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnRegresar" layoutX="14.0" layoutY="431.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="80.0" prefWidth="175.0" stylesheets="@../resources/KwikiMarkCSS.css" text="Regresar">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Return%20home.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <styleClass>
+            <String fx:value="button2" />
+            <String fx:value="button3" />
+         </styleClass>
+      </Button>
+      <Label layoutX="10.0" layoutY="10.0" text="Producto ">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbCategoriaP" layoutX="295.0" layoutY="180.0" prefHeight="32.0" prefWidth="278.0" />
+      <ComboBox fx:id="cmbIdProveedores" layoutX="295.0" layoutY="135.0" prefHeight="32.0" prefWidth="278.0" />
+      <Button fx:id="btnCategoriaP" layoutX="15.0" layoutY="517.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="47.0" prefWidth="175.0" stylesheets="@../resources/KwikiMarkCSS.css" text="Categoria Producto">
+         <styleClass>
+            <String fx:value="button2" />
+            <String fx:value="button3" />
+         </styleClass>
+      </Button>
+   </children>
+</AnchorPane>
