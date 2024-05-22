@@ -2,7 +2,7 @@ package org.ricardofigueroa.controllers;
 
 /**
  * Nombre: Ricardo Figueroa Fecha de creacion: 11/04/2024 Ultmia Fecha de
- * edicion : 02/05/2024
+ * edicion : 19/05/2024
  *
  */
 import java.net.URL;

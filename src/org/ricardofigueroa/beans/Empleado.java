@@ -3,7 +3,7 @@ package org.ricardofigueroa.beans;
 
 /**
  * Nombre: Ricardo Figueroa Fecha de creacion: 11/04/2024 
- * Ultmia Fecha de edicion : 26/04/2024
+ * Ultmia Fecha de edicion : 18/05/2024
  *
  */
 public class Empleado {

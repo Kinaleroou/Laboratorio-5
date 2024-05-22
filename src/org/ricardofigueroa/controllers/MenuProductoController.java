@@ -1,10 +1,11 @@
 package org.ricardofigueroa.controllers;
 
 /**
- * Nombre: Ricardo Figueroa Fecha de creacion: 11/04/2024 Ultmia Fecha de
- * edicion : 02/05/2024
+ * Nombre: Ricardo Figueroa Fecha de creacion: 11/04/2024 
+ * Ultmia Fecha de edicion : 21/05/2024
  *
  */
+import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +29,11 @@ import javax.swing.JOptionPane;
 import org.ricardofigueroa.beans.*;
 import org.ricardofigueroa.db.Conexion;
 import org.ricardofigueroa.system.Main;
+import javafx.stage.FileChooser;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 public class MenuProductoController implements Initializable {
 
@@ -88,6 +94,9 @@ public class MenuProductoController implements Initializable {
     private Button btnReportesP;
     @FXML
     private Button btnCategoriaP;
+
+    @FXML
+    private Button btnImagenP;
     @FXML
     private ImageView imgAgregarP;
     @FXML
@@ -105,6 +114,42 @@ public class MenuProductoController implements Initializable {
 
     public Main getEscenarioPrincipal() {
         return escenarioPrincipal;
+    }
+
+    // Método para manejar el evento de cargar imagen y devolverla como byte[]
+    private static byte[] cargarImagen() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleccionar Imagen");
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                File file = fileChooser.getSelectedFile();
+                BufferedImage bufferedImage = ImageIO.read(file);
+
+                // Comprimir la imagen antes de devolverla
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                ImageIO.write(compressImage(bufferedImage), "png", outputStream);
+                return outputStream.toByteArray();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    // Método para comprimir la imagen
+    private static BufferedImage compressImage(BufferedImage image) throws IOException {
+        // Ajusta la calidad de compresión según sea necesario
+        float quality = 0.5f; // Reducir a 50% de la calidad original
+        BufferedImage compressedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        // Escribir la imagen comprimida
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(compressedImage, "jpg", outputStream);
+
+        // Devuelve la imagen comprimida
+        return compressedImage;
     }
 
     public void cargarDatos() {
@@ -183,11 +228,11 @@ public class MenuProductoController implements Initializable {
                         resultado.getInt("productoId"),
                         resultado.getString("nombreProducto"),
                         resultado.getString("descripcionProducto"),
-                        resultado.getInt("cantidadStock"),
                         resultado.getDouble("precioVentaMayor"),
                         resultado.getDouble("precioCompra"),
-                        resultado.getInt("distribuidorId"),
                         resultado.getString("imagenProducto"),
+                        resultado.getInt("cantidadStock"),
+                        resultado.getInt("distribuidorId"),
                         resultado.getInt("categoriaProductosId")
                 ));
             }
@@ -238,7 +283,7 @@ public class MenuProductoController implements Initializable {
         return listaProveedores = FXCollections.observableList(lista);
     }
 
-    public void agregar() {
+    public void agregar() throws FileNotFoundException {
         switch (tipoOperaciones) {
             case NINGUNO:
                 activarControllers();
@@ -265,15 +310,28 @@ public class MenuProductoController implements Initializable {
         }
     }
 
-    public void guardar() {
+    public static String getFilePath() {
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            return selectedFile.getAbsolutePath();
+        }
+        return null;
+    }
+
+    public void guardar() throws FileNotFoundException {
         Producto producto = new Producto();
         producto.setProductoId(Integer.parseInt(txtProductoId.getText()));
         producto.setNombreProducto(txtNombreP.getText());
         producto.setDescripcionProducto(txtDescripcionProducto.getText());
         producto.setCantidadStock(Integer.parseInt(txtCantidadStock.getText()));
-        producto.setDistribuidorId(buscarProveedor(((Producto) cmbIdProveedores.getValue()).getDistribuidorId()).getCodigoProveedor());
         producto.setPrecioVentaMayor(Double.parseDouble(txtPrecioMayor.getText()));
         producto.setPrecioCompra(Double.parseDouble(txtPrecioCompra.getText()));
+        File imageFile = new File(getFilePath());
+        InputStream inputStream = new FileInputStream(imageFile);
+        producto.setDistribuidorId(buscarProveedor(((Producto) cmbIdProveedores.getValue()).getDistribuidorId()).getCodigoProveedor());
         producto.setCategoriaProductosId(buscarCategoriaProducto(((Producto) cmbCategoriaP.getValue()).getCategoriaProductosId()).getCategoriaProductosId());
 
         try {
@@ -285,10 +343,9 @@ public class MenuProductoController implements Initializable {
             procedimiento.setDouble(5, producto.getPrecioVentaMayor());
             procedimiento.setDouble(6, producto.getPrecioCompra());
             procedimiento.setInt(7, producto.getDistribuidorId());
-            procedimiento.setString(8, producto.getImagenProducto());
+            procedimiento.setBinaryStream(8, inputStream, (int) imageFile.length());
             procedimiento.setInt(9, producto.getCategoriaProductosId());
             procedimiento.execute();
-            listaProductos.add(producto);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -381,6 +438,7 @@ public class MenuProductoController implements Initializable {
             producto.setPrecioCompra(Double.parseDouble(txtPrecioCompra.getText()));
             producto.setCategoriaProductosId(((CategoriaProducto) cmbCategoriaP.getSelectionModel().getSelectedItem()).getCategoriaProductosId());
             producto.setDistribuidorId(((Proveedor) cmbIdProveedores.getSelectionModel().getSelectedItem()).getCodigoProveedor());
+            byte[] imagenBytes = cargarImagen();
             procedimiento.setInt(1, producto.getProductoId());
             procedimiento.setString(2, producto.getNombreProducto());
             procedimiento.setString(3, producto.getDescripcionProducto());
@@ -388,7 +446,8 @@ public class MenuProductoController implements Initializable {
             procedimiento.setDouble(5, producto.getPrecioVentaMayor());
             procedimiento.setDouble(6, producto.getPrecioCompra());
             procedimiento.setInt(7, producto.getDistribuidorId());
-            procedimiento.setString(8, producto.getImagenProducto());
+
+            procedimiento.setBytes(8, imagenBytes); // Usar setBytes para guardar la imagen en la base de datos
             procedimiento.setInt(9, producto.getCategoriaProductosId());
             procedimiento.execute();
         } catch (Exception e) {
@@ -434,8 +493,9 @@ public class MenuProductoController implements Initializable {
     public void handleButtonAction(ActionEvent event) {
         if (event.getSource() == btnRegresar) {
             escenarioPrincipal.menuPrincipalView();
-        }else         if (event.getSource() == btnCategoriaP) {
+        } else if (event.getSource() == btnCategoriaP) {
             escenarioPrincipal.menCategoriaProductoView();
+
         }
     }
 }
