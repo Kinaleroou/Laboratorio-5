@@ -1002,76 +1002,108 @@ DELIMITER ;
 
 SET SQL_SAFE_UPDATES = 0;
 
--- Cargos
-CALL sp_AgregarCargo(1, 'Cargo1', 'Descripcion1');
-CALL sp_ListarCargos();
-CALL sp_ActualizarCargo(1, 'Cargo2', 'Nueva descripcion');
--- CALL sp_EliminarCargo(1);
 
--- Clientes
-CALL sp_AgregarClientes(1, 'NIT123', 'Juan', 'Perez', 'Calle 123', '123456789', 'juan@example.com');
-CALL sp_ListarClientes();
-CALL sp_ActualizarClientes(1, 'NIT456', 'Juan', 'Perez', 'Calle 456', '987654321', 'juan@example.com');
--- CALL sp_EliminarClientes(1);
 
--- Empleados
-CALL sp_AgregarEmpleado(1, 'Juan', 'Perez', 1000.00, 'Calle 123', 'Mañana', 1, 1);
+call sp_AgregarClientes (01, '12457878', 'harol', 'luna', 'El basurero zona 3', '21215498', 'harolxluna4ever.com');
+call sp_AgregarClientes (02, '15423874', 'oliver', 'sisimit', 'El basurero km. 22', '45875221', 'xdxsdadasd.com');
+
+call sp_ListarClientes ();
+
+-- call sp_BuscarClientes (1);
+
+
+-- Llamadas a los procedimientos
+call sp_AgregarProveedores(1, '1234567890', 'Proveedor', 'S.A.', 'Calle 123, Ciudad', 'Proveedor de productos', 'Juan Perez', 'www.proveedor.com');
+call sp_ListarProveedores();
+call sp_ActualizarProveedores(1, '1234567890', 'Proveedor', 'S.A.', 'Calle 123, Ciudad', 'Proveedor de productos', 'Juan Perez', 'www.proveedor.com');
+-- call sp_EliminarProveedores(1);
+
+
+-- Llamadas a los procedimientos
+call sp_AgregarEmailProveedor(1, 'proveedor@ejemplo.com', 'Email principal', 1);
+call sp_ListarEmailProveedor();
+call sp_BuscarEmailProveedor(1);
+ call sp_EditarEmailProveedor(1, 'proveedor@ejemplo.com', 'Email de contacto', 1);
+-- call sp_EliminarEmailProveedor(1);
+
+
+-- Llamadas a los procedimientos
+call sp_AgregarTelefonoProveedor(1, '1234567890', '0987654321', 'Numeros de contacto', 1);
+call sp_ListarTelefonoProveedor();
+call sp_BuscarTelefonoProveedor(1);
+call sp_EditarTelefonoProveedor(1, '1234567890', '0987654321', 'Numeros de contacto actualizados', 1);
+-- call sp_EliminarTelefonoProveedor(1);
+
+
+
+-- Llamadas a los procedimientos
+call sp_AgregarCategoriaProductos(1, 'Electrónicos', 'Productos electrónicos');
+call sp_ListarCategoriaProductos();
+call sp_BuscarCategoriaProductos(1);
+call sp_EditarCategoriaProductos(1, 'Electrónicos', 'Productos electrónicos como televisores, radios, computadoras, etc.');
+-- call sp_EliminarCategoriaProductos(1);
+
+
+-- Llamadas a los procedimientos
+call sp_AgregarProductos(1, 'Producto 1', 'Descripción del producto 1', 100, 200.00, 150.00, 1, NULL, 1);
+call sp_ListarProductos();
+call sp_BuscarProductos(1);
+call sp_EditarProductos(1, 'Producto 1 actualizado', 'Descripción del producto 1 actualizada', 100, 200.00, 150.00, 1, NULL, 1);
+-- call sp_EliminarProductos(1);
+
+
+-- Llamadas a los procedimientos
+call sp_AgregarCompras(1, '2024-05-10', 500.00);
+call sp_ListarCompras();
+call sp_BuscarCompras(1);
+call sp_EditarCompras(1, '2024-05-10', 600.00);
+-- call sp_EliminarCompras(1);
+
+
+
+-- Llamadas a los procedimientos
+call sp_AgregarDetalleCompra(1, 10, 1, 1);
+call sp_ListarDetalleCompra();
+call sp_BuscarDetalleCompra(1);
+call sp_EditarDetalleCompra(1, 20, 1, 1);
+-- call sp_EliminarDetalleCompra(1);
+
+
+-- Llamadas a los procedimientos
+call sp_AgregarFacturas(1, '2024-05-10', '08:00:00', 1, 1, 500.00);
+call sp_ListarFacturas();
+call sp_BuscarFacturas(1);
+call sp_EditarFacturas(1, '2024-05-10', '08:00:00', 1, 1, 600.00);
+-- call sp_EliminarFacturas(1);
+
+-- Llamada al procedimiento para agregar un empleado
+CALL sp_AgregarEmpleado(1, 'Juan', 'Perez', 1500.00, 'Calle 123', 'Matutino', 1, 2);
 CALL sp_ListarEmpleados();
--- CALL sp_ActualizarEmpleado(1, 'Juan', 'Perez', 1500.00, 'Calle 456', 'Tarde', 2, 2);
+CALL sp_ActualizarEmpleado(1, 'Pedro', 'Gomez', 1700.00, 'Calle 456', 'Vespertino', 2, 3);
 -- CALL sp_EliminarEmpleado(1);
 
--- Proveedores
-CALL sp_AgregarProveedores(1, 'NIT123', 'Proveedor1', 'Apellido1', 'Direccion1', 'RazonSocial1', 'Contacto1', 'www.proveedor1.com');
-CALL sp_ListarProveedores();
-CALL sp_BuscarProveedor(1);
-CALL sp_ActualizarProveedores(1, 'NIT456', 'Proveedor2', 'Apellido2', 'Direccion2', 'RazonSocial2', 'Contacto2', 'www.proveedor2.com');
--- CALL sp_EliminarProveedores(1);
+-- Llamada al procedimiento para agregar un cargo
+CALL sp_AgregarCargo(1, 'Gerente', 'Responsable de la gestión y dirección de un área');
+CALL sp_ListarCargos();
+CALL sp_ActualizarCargo(1, 'Director', 'Encargado de supervisar todas las operaciones');
+-- CALL sp_EliminarCargo(1);
 
--- EmailProveedor
-CALL sp_AgregarEmailProveedor(1, 'email1@example.com', 'Descripcion1', 1);
-CALL sp_ListarEmailProveedor();
-CALL sp_BuscarEmailProveedor(1);
-CALL sp_EditarEmailProveedor(1, 'email2@example.com', 'Nueva descripcion', 1);
--- CALL sp_EliminarEmailProveedor(1);
-
--- TelefonoProveedor
-CALL sp_AgregarTelefonoProveedor(1, '123456', '789012', 'Observaciones1', 1);
-CALL sp_ListarTelefonoProveedor();
-CALL sp_BuscarTelefonoProveedor(1);
-CALL sp_EditarTelefonoProveedor(1, '654321', '210987', 'Nuevas observaciones', 1);
--- CALL sp_EliminarTelefonoProveedor(1);
-
--- CategoriaProductos
-CALL sp_AgregarCategoriaProductos(1, 'Categoria1', 'Descripcion1');
-CALL sp_ListarCategoriaProductos();
-CALL sp_BuscarCategoriaProductos(1);
--- CALL sp_EliminarCategoriaProductos(1);
-CALL sp_EditarCategoriaProductos(1, 'Categoria2', 'Nueva descripcion');
-
--- Productos
-CALL sp_AgregarProductos(1, 'Producto1', 'Descripcion1', 10, 100.00, 50.00, 1, 'imagen1.jpg', 1);
-CALL sp_ListarProductos();
-CALL sp_BuscarProductos(1);
--- CALL sp_EliminarProductos(1);
--- CALL sp_EditarProductos(1, 'Producto2', 'Nueva descripcion', 20, 150.00, 70.00, 2, 'imagen2.jpg', 2);
-
--- Compras
-CALL sp_AgregarCompras(1, '2024-05-22', 'Compra de productos', 500.00);
+-- Llamado para agregar una compra
+CALL sp_AgregarCompras(1, '2024-05-10', 'Descripción de la compra', 100.00);
 CALL sp_ListarCompras();
-CALL sp_EditarCompras(1, '2024-05-23', 'Compra de productos actualizada', 600.00);
+CALL sp_EditarCompras(1, '2024-05-10', 'Nueva descripción de la compra', 150.00);
 -- CALL sp_EliminarCompras(1);
 
--- DetalleCompra
-CALL sp_AgregarDetalleCompra(1, 5, 1, 1);
-CALL sp_ListarDetalleCompra();
-CALL sp_BuscarDetalleCompra(1);
--- CALL sp_EliminarDetalleCompra(1);
--- CALL sp_EditarDetalleCompra(1, 10, 2, 2);
-
- 
 
 
-/*
+-- Llamadas a los procedimientos
+call sp_AgregarDetalleFactura(1, 1, 1);
+call sp_ListarDetalleFactura();
+call sp_BuscarDetalleFactura(1);
+call sp_EditarDetalleFactura(1, 1, 1);
+-- call sp_EliminarDetalleFactura(1);
+
+
 -- LOS TRIGGERS DEL ENUNCIADO 
 
 DELIMITER $$
@@ -1149,30 +1181,4 @@ BEGIN
     CALL calcular_precios_existencia;
 END$$
 
-DELIMITER;
-
--- Trigger para actualizar el resumen de clientes
-DELIMITER $$
-CREATE TRIGGER after_cliente_insert_delete
-AFTER INSERT ON Clientes
-FOR EACH ROW
-BEGIN
-    -- Lógica para actualizar el resumen de clientes
-    INSERT INTO ResumenClientes (codigoCliente, nombreCliente, direccionCliente, telefonoCliente)
-    VALUES (NEW.codigoCliente, NEW.nombreCliente, NEW.direccionCliente, NEW.telefonoCliente);
-END$$
-DELIMITER ;
-
--- Trigger para mantener actualizada la información de productos comprados a proveedores
-DELIMITER $$
-CREATE TRIGGER after_proveedor_insert_delete
-AFTER INSERT ON Proveedores
-FOR EACH ROW
-BEGIN
-    -- Lógica para mantener actualizada la información de productos comprados a proveedores
-    INSERT INTO ProductosPorProveedor (codigoProveedor, nombreProveedor, productoId, nombreProducto)
-    VALUES (NEW.codigoProveedor, NEW.nombreProveedor, NULL, NULL);
-END$$
-DELIMITER ;
-
-
+DELIMITER ;

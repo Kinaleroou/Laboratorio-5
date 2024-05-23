@@ -5,6 +5,8 @@ package org.ricardofigueroa.beans;
  * Ultmia Fecha de edicion : 26/04/2024
  *
  */
+
+
 public class CategoriaProducto {
     private String NombreCategoria;
     private String DescripcionCategoria;
