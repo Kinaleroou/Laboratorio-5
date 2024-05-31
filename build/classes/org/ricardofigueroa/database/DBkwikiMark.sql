@@ -98,7 +98,6 @@ create table Productos (
     precioVentaMayor decimal(10,2),
     precioCompra decimal(10,2),
     distribuidorId int,
-    imagenProducto varchar(50),
     categoriaProductosId int,
     primary key (productoId),
     foreign key (distribuidorId)
@@ -596,14 +595,14 @@ delimiter ;
 -- Productos
 -- agregar
 DELIMITER $$
-CREATE PROCEDURE sp_AgregarProductos (IN productoId INT, IN nombreProducto VARCHAR(50), IN descripcionProducto VARCHAR(100), IN cantidadStock INT,IN precioVentaMayor DECIMAL(10,2), IN precioCompra DECIMAL(10,2), IN distribuidorId INT, IN imagenProducto VARCHAR(50), IN categoriaProductosId INT)
+CREATE PROCEDURE sp_AgregarProductos (IN productoId INT, IN nombreProducto VARCHAR(50), IN descripcionProducto VARCHAR(100), IN cantidadStock INT,IN precioVentaMayor DECIMAL(10,2), IN precioCompra DECIMAL(10,2), IN distribuidorId INT, IN categoriaProductosId INT)
 BEGIN
     INSERT INTO Productos (
         productoId, nombreProducto, descripcionProducto, cantidadStock, 
-        precioVentaMayor, precioCompra, distribuidorId, imagenProducto, categoriaProductosId
+        precioVentaMayor, precioCompra, distribuidorId, categoriaProductosId
     ) VALUES (
         productoId, nombreProducto, descripcionProducto, cantidadStock, 
-        precioVentaMayor, precioCompra, distribuidorId, imagenProducto, categoriaProductosId
+        precioVentaMayor, precioCompra, distribuidorId, categoriaProductosId
     );
 END $$
 DELIMITER ;
@@ -698,6 +697,22 @@ BEGIN
     VALUES (p_compraId, p_fechaCompra, p_descripcion, p_totalCompra);
 END $$
 DELIMITER ;
+
+-- Buscar compras
+delimiter $$
+
+create procedure sp_BuscarCompras (in compraId int)
+begin 
+	select 
+		C.compraId,
+        C.fechaCompra,
+        C.descripcion,
+        C.totalCompra
+        from Compras C
+        where compraId = compraId;
+end $$
+
+delimiter ;
 
 -- Listar todas las compras
 DELIMITER $$
@@ -1053,7 +1068,7 @@ call sp_EditarProductos(1, 'Producto 1 actualizado', 'Descripción del producto 
 
 
 -- Llamadas a los procedimientos
-call sp_AgregarCompras(1, '2024-05-10', 500.00);
+call sp_AgregarCompras(1, '2024-05-10', '5 libras de azucar',  50.00);
 call sp_ListarCompras();
 call sp_BuscarCompras(1);
 call sp_EditarCompras(1, '2024-05-10', 600.00);
@@ -1104,4 +1119,81 @@ call sp_EditarDetalleFactura(1, 1, 1);
 -- call sp_EliminarDetalleFactura(1);
 
 
+-- LOS TRIGGERS DEL ENUNCIADO 
 
+DELIMITER $$
+
+CREATE TRIGGER calcular_precios_existencia BEFORE INSERT ON DetalleCompra
+FOR EACH ROW
+BEGIN
+    DECLARE total_compra DECIMAL(10,2);
+    DECLARE cantidad_comprada INT;
+
+    -- Calcular el total de la compra
+    SET total_compra = NEW.costoUnitario * NEW.cantidad;
+
+    -- Actualizar precioUnitario con un 40% de ganancia en la tabla Productos
+    UPDATE Productos
+    SET precioUnitario = total_compra * 1.4 / NEW.cantidad
+    WHERE codigoProducto = NEW.codigoProducto;
+
+    -- Actualizar precioDocena con un 35% de ganancia en la tabla Productos
+    UPDATE Productos
+    SET precioDocena = total_compra * 1.35 / 12
+    WHERE codigoProducto = NEW.codigoProducto;
+
+    -- Actualizar precioMayor con un 25% de ganancia en la tabla Productos
+    UPDATE Productos
+    SET precioMayor = total_compra * 1.25 / 144
+    WHERE codigoProducto = NEW.codigoProducto;
+
+    -- Actualizar existencia en la tabla Productos
+    SELECT SUM(cantidad) INTO cantidad_comprada FROM DetalleCompra WHERE codigoProducto = NEW.codigoProducto;
+    UPDATE Productos
+    SET existencia = existencia + cantidad_comprada
+    WHERE codigoProducto = NEW.codigoProducto;
+END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_agregarDProducto(
+    IN p_codigoProducto VARCHAR(15),
+    IN p_descripcionProducto VARCHAR(15),
+    IN p_existencia INT,
+    IN p_codigoTipoProducto INT,
+    IN p_codigoProveedor INT
+)
+BEGIN
+    -- Insertar el producto con valores predeterminados de precios y existencia
+    INSERT INTO Productos(codigoProducto, descripcionProducto, precioUnitario, precioDocena, precioMayor, existencia, codigoTipoProducto, codigoProveedor)
+    VALUES(p_codigoProducto, p_descripcionProducto, 0.00, 0.00, 0.00, p_existencia, p_codigoTipoProducto, p_codigoProveedor);
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_actualizarDProducto(
+    IN p_codigoProducto VARCHAR(15),
+    IN p_nuevaDescripcionProducto VARCHAR(15),
+    IN p_nuevaExistencia INT,
+    IN p_nuevoCodigoTipoProducto INT,
+    IN p_nuevoCodigoProveedor INT
+)
+BEGIN
+    -- Actualizar el producto
+    UPDATE Productos
+    SET descripcionProducto = p_nuevaDescripcionProducto,
+        codigoTipoProducto = p_nuevoCodigoTipoProducto,
+        codigoProveedor = p_nuevoCodigoProveedor
+    WHERE codigoProducto = p_codigoProducto;
+
+    -- Recalcular los precios y la existencia del producto
+    CALL calcular_precios_existencia;
+END$$
+
+DELIMITER ;

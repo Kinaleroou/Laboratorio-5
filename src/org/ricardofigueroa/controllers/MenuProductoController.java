@@ -116,6 +116,7 @@ public class MenuProductoController implements Initializable {
         return escenarioPrincipal;
     }
 
+    /*
     // Método para manejar el evento de cargar imagen y devolverla como byte[]
     private static byte[] cargarImagen() {
         JFileChooser fileChooser = new JFileChooser();
@@ -150,7 +151,7 @@ public class MenuProductoController implements Initializable {
 
         // Devuelve la imagen comprimida
         return compressedImage;
-    }
+    }*/
 
     public void cargarDatos() {
         tblProductos.setItems(getProductos());
@@ -329,8 +330,8 @@ public class MenuProductoController implements Initializable {
         producto.setCantidadStock(Integer.parseInt(txtCantidadStock.getText()));
         producto.setPrecioVentaMayor(Double.parseDouble(txtPrecioMayor.getText()));
         producto.setPrecioCompra(Double.parseDouble(txtPrecioCompra.getText()));
-        File imageFile = new File(getFilePath());
-        InputStream inputStream = new FileInputStream(imageFile);
+        /*File imageFile = new File(getFilePath());
+        InputStream inputStream = new FileInputStream(imageFile);*/
         producto.setDistribuidorId(buscarProveedor(((Producto) cmbIdProveedores.getValue()).getDistribuidorId()).getCodigoProveedor());
         producto.setCategoriaProductosId(buscarCategoriaProducto(((Producto) cmbCategoriaP.getValue()).getCategoriaProductosId()).getCategoriaProductosId());
 
@@ -343,7 +344,7 @@ public class MenuProductoController implements Initializable {
             procedimiento.setDouble(5, producto.getPrecioVentaMayor());
             procedimiento.setDouble(6, producto.getPrecioCompra());
             procedimiento.setInt(7, producto.getDistribuidorId());
-            procedimiento.setBinaryStream(8, inputStream, (int) imageFile.length());
+            //procedimiento.setBinaryStream(8, inputStream, (int) imageFile.length());
             procedimiento.setInt(9, producto.getCategoriaProductosId());
             procedimiento.execute();
         } catch (SQLException e) {
@@ -438,7 +439,7 @@ public class MenuProductoController implements Initializable {
             producto.setPrecioCompra(Double.parseDouble(txtPrecioCompra.getText()));
             producto.setCategoriaProductosId(((CategoriaProducto) cmbCategoriaP.getSelectionModel().getSelectedItem()).getCategoriaProductosId());
             producto.setDistribuidorId(((Proveedor) cmbIdProveedores.getSelectionModel().getSelectedItem()).getCodigoProveedor());
-            byte[] imagenBytes = cargarImagen();
+           // byte[] imagenBytes = cargarImagen();
             procedimiento.setInt(1, producto.getProductoId());
             procedimiento.setString(2, producto.getNombreProducto());
             procedimiento.setString(3, producto.getDescripcionProducto());
@@ -447,7 +448,7 @@ public class MenuProductoController implements Initializable {
             procedimiento.setDouble(6, producto.getPrecioCompra());
             procedimiento.setInt(7, producto.getDistribuidorId());
 
-            procedimiento.setBytes(8, imagenBytes); // Usar setBytes para guardar la imagen en la base de datos
+            //procedimiento.setBytes(8, imagenBytes); // Usar setBytes para guardar la imagen en la base de datos
             procedimiento.setInt(9, producto.getCategoriaProductosId());
             procedimiento.execute();
         } catch (Exception e) {

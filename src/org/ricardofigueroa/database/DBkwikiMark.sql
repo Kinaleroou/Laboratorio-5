@@ -98,7 +98,6 @@ create table Productos (
     precioVentaMayor decimal(10,2),
     precioCompra decimal(10,2),
     distribuidorId int,
-    imagenProducto varchar(50),
     categoriaProductosId int,
     primary key (productoId),
     foreign key (distribuidorId)
@@ -596,14 +595,14 @@ delimiter ;
 -- Productos
 -- agregar
 DELIMITER $$
-CREATE PROCEDURE sp_AgregarProductos (IN productoId INT, IN nombreProducto VARCHAR(50), IN descripcionProducto VARCHAR(100), IN cantidadStock INT,IN precioVentaMayor DECIMAL(10,2), IN precioCompra DECIMAL(10,2), IN distribuidorId INT, IN imagenProducto VARCHAR(50), IN categoriaProductosId INT)
+CREATE PROCEDURE sp_AgregarProductos (IN productoId INT, IN nombreProducto VARCHAR(50), IN descripcionProducto VARCHAR(100), IN cantidadStock INT,IN precioVentaMayor DECIMAL(10,2), IN precioCompra DECIMAL(10,2), IN distribuidorId INT, IN categoriaProductosId INT)
 BEGIN
     INSERT INTO Productos (
         productoId, nombreProducto, descripcionProducto, cantidadStock, 
-        precioVentaMayor, precioCompra, distribuidorId, imagenProducto, categoriaProductosId
+        precioVentaMayor, precioCompra, distribuidorId, categoriaProductosId
     ) VALUES (
         productoId, nombreProducto, descripcionProducto, cantidadStock, 
-        precioVentaMayor, precioCompra, distribuidorId, imagenProducto, categoriaProductosId
+        precioVentaMayor, precioCompra, distribuidorId, categoriaProductosId
     );
 END $$
 DELIMITER ;
@@ -698,6 +697,22 @@ BEGIN
     VALUES (p_compraId, p_fechaCompra, p_descripcion, p_totalCompra);
 END $$
 DELIMITER ;
+
+-- Buscar compras
+delimiter $$
+
+create procedure sp_BuscarCompras (in compraId int)
+begin 
+	select 
+		C.compraId,
+        C.fechaCompra,
+        C.descripcion,
+        C.totalCompra
+        from Compras C
+        where compraId = compraId;
+end $$
+
+delimiter ;
 
 -- Listar todas las compras
 DELIMITER $$
@@ -1053,7 +1068,7 @@ call sp_EditarProductos(1, 'Producto 1 actualizado', 'Descripción del producto 
 
 
 -- Llamadas a los procedimientos
-call sp_AgregarCompras(1, '2024-05-10', 500.00);
+call sp_AgregarCompras(1, '2024-05-10', '5 libras de azucar',  50.00);
 call sp_ListarCompras();
 call sp_BuscarCompras(1);
 call sp_EditarCompras(1, '2024-05-10', 600.00);
@@ -1181,4 +1196,4 @@ BEGIN
     CALL calcular_precios_existencia;
 END$$
 
-DELIMITER ;
+DELIMITER ;

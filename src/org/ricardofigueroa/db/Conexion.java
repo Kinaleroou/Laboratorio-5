@@ -17,7 +17,7 @@ public class Conexion {
     public Conexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/DBkwikiMark?useSSL=false", "kinalgod", "abc123!!");
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/DBkwikiMark?useSSL=false", "2023370_IN5BV", "abc123!!");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
