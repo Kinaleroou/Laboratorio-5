@@ -9,6 +9,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import org.ricardofigueroa.beans.Clientes;
 import org.ricardofigueroa.db.Conexion;
+import org.ricardofigueroa.reportes.generarReporte;
 import org.ricardofigueroa.system.Main;
 
 public class MenuClientesController implements Initializable {
@@ -249,9 +252,12 @@ public class MenuClientesController implements Initializable {
                 break;
         }
     }
-    
+
     public void reporte() {
         switch (tipoOperaciones) {
+            case NINGUNO:
+                imprimirReporte();
+                break;
             case ACTUALIZAR:
                 deactivarControllers();
                 limpiarControllers();
@@ -267,9 +273,15 @@ public class MenuClientesController implements Initializable {
                 break;
         }
     }
+    
+    public void imprimirReporte(){
+        Map parametro = new HashMap();
+        parametro.put("codigoCliente", null);
+        generarReporte.mostrarReportes("report1.jasper", "Reporte de los clientes", parametro);
+    }
 
     public void actualizar() {
-        try {   
+        try {
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ActualizarClientes (?, ?, ?, ?, ?, ?, ?)}");
             Clientes registro = (Clientes) tblClientes.getSelectionModel().getSelectedItem();
             registro.setNITCliente(txtNitC.getText());

@@ -1,3 +1,5 @@
+ALTER USER '2023370_IN5BV'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123!!';
+
 set global time_zone = '-6:00';
 
 /*

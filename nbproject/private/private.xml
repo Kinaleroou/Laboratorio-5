@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/INFORMATICA/Desktop/viernes%2031/Laboratorio-5/src/org/ricardofigueroa/controllers/MenuProductoController.java</file>
-            <file>file:/C:/Users/INFORMATICA/Desktop/viernes%2031/Laboratorio-5/src/org/ricardofigueroa/beans/Producto.java</file>
+            <file>file:/C:/Users/INFORMATICA/Desktop/reporteria%20clientes/Laboratorio-5/src/org/ricardofigueroa/reportes/generarReporte.java</file>
+            <file>file:/C:/Users/INFORMATICA/Desktop/reporteria%20clientes/Laboratorio-5/src/org/ricardofigueroa/controllers/MenuClientesController.java</file>
+            <file>file:/C:/Users/INFORMATICA/Desktop/reporteria%20clientes/Laboratorio-5/src/org/ricardofigueroa/beans/Clientes.java</file>
         </group>
     </open-files>
 </project-private>
