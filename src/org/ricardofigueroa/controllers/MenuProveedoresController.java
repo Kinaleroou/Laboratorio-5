@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +28,9 @@ import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
 import org.ricardofigueroa.beans.Proveedor;
 import org.ricardofigueroa.db.Conexion;
+import org.ricardofigueroa.reportes.generarReporte;
 import org.ricardofigueroa.system.Main;
+
 public class MenuProveedoresController implements Initializable {
 
     private Main escenarioPrincipal;
@@ -264,6 +268,9 @@ public class MenuProveedoresController implements Initializable {
 
     public void reporte() {
         switch (tipoOperaciones) {
+            case NINGUNO:
+                imprimirReporte();
+                break;
             case ACTUALIZAR:
                 deactivarControllers();
                 limpiarControllers();
@@ -272,12 +279,18 @@ public class MenuProveedoresController implements Initializable {
                 btnAgregarP.setDisable(false);
                 btnEliminarP.setDisable(false);
                 btnEditarP.setDisable(false);
-                imgEditarP.setImage(new Image("/org/ricardofigueroa/images/editarClientes.png"));
-                imgReportesP.setImage(new Image("/org/ricardofigueroa/images/reportecliente.png"));
+                //imgEditarC.setImage(new Image("/org/ricardofigueroa/images/editarClientes.png"));
+                //imgReportesC.setImage(new Image("/org/ricardofigueroa/images/reportecliente.png"));
                 tipoOperaciones = operaciones.NINGUNO;
                 cargarDatos();
                 break;
         }
+    }
+
+    public void imprimirReporte() {
+        Map parametro = new HashMap();
+        parametro.put("codigoCliente", null);
+        generarReporte.mostrarReportes("reporteCliente.jasper", "Reporte de los clientes", parametro);
     }
 
     public void actualizar() {
@@ -347,9 +360,9 @@ public class MenuProveedoresController implements Initializable {
     public void handleButtonAction(ActionEvent event) {
         if (event.getSource() == btnRegresar) {
             escenarioPrincipal.menuPrincipalView();
-        }else if (event.getSource() == btnTelefono) {
+        } else if (event.getSource() == btnTelefono) {
             escenarioPrincipal.menuTelefonoProveedoresView();
-        }else if (event.getSource() == btnEmail) {
+        } else if (event.getSource() == btnEmail) {
             escenarioPrincipal.menuEmailProveedoresView();
         }
     }
