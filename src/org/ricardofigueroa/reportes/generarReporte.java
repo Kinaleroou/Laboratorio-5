@@ -13,6 +13,7 @@ import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import org.ricardofigueroa.db.Conexion;
 
 /**
  *
@@ -24,7 +25,7 @@ public class generarReporte {
         InputStream reporte = generarReporte.class.getResourceAsStream(nombreReporte);
         try {
             JasperReport reporteMaestro = (JasperReport)JRLoader.loadObject(reporte);
-            JasperPrint reporteImpreso = JasperFillManager.fillReport(reporteMaestro, parametro);
+            JasperPrint reporteImpreso = JasperFillManager.fillReport(reporteMaestro, parametro, Conexion.getInstance().getConexion());
             JasperViewer visor = new JasperViewer(reporteImpreso, false);
             visor.setTitle(titulo);
             visor.setVisible(true);

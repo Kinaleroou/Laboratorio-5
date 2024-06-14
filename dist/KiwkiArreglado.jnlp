@@ -8,7 +8,8 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="KiwkiArreglado.jar" size="628194" download="eager" />
+    <jar href="KiwkiArreglado.jar" size="2215959" download="eager" />
+    <jar href="lib\jasperreports-5.6.0.jar" size="4989676" download="eager" />
     <jar href="lib\mysql-connector-j-8.3.0.jar" size="2495536" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="KiwkiArreglado" >
