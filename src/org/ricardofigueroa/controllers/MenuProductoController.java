@@ -1,8 +1,8 @@
 package org.ricardofigueroa.controllers;
 
 /**
- * Nombre: Ricardo Figueroa Fecha de creacion: 11/04/2024 
- * Ultmia Fecha de edicion : 21/05/2024
+ * Nombre: Ricardo Figueroa Fecha de creacion: 11/04/2024 Ultmia Fecha de
+ * edicion : 21/05/2024
  *
  */
 import java.awt.image.BufferedImage;
@@ -32,8 +32,11 @@ import org.ricardofigueroa.system.Main;
 import javafx.stage.FileChooser;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import org.ricardofigueroa.reportes.generarReporte;
 
 public class MenuProductoController implements Initializable {
 
@@ -152,7 +155,6 @@ public class MenuProductoController implements Initializable {
         // Devuelve la imagen comprimida
         return compressedImage;
     }*/
-
     public void cargarDatos() {
         tblProductos.setItems(getProductos());
         colProductoId.setCellValueFactory(new PropertyValueFactory<>("productoId"));
@@ -412,6 +414,9 @@ public class MenuProductoController implements Initializable {
 
     public void reporte() {
         switch (tipoOperaciones) {
+            case NINGUNO:
+                imprimirReporte();
+                break;
             case ACTUALIZAR:
                 deactivarControllers();
                 limpiarControllers();
@@ -420,12 +425,18 @@ public class MenuProductoController implements Initializable {
                 btnAgregarP.setDisable(false);
                 btnEliminarP.setDisable(false);
                 btnEditarP.setDisable(false);
-                imgEditarP.setImage(new Image("/org/ricardofigueroa/images/editarClientes.png"));
-                imgReportesP.setImage(new Image("/org/ricardofigueroa/images/reportecliente.png"));
+                //imgEditarC.setImage(new Image("/org/ricardofigueroa/images/editarClientes.png"));
+                //imgReportesC.setImage(new Image("/org/ricardofigueroa/images/reportecliente.png"));
                 tipoOperaciones = operaciones.NINGUNO;
                 cargarDatos();
                 break;
         }
+    }
+
+    public void imprimirReporte() {
+        Map parametro = new HashMap();
+        parametro.put("codigoCliente", null);
+        generarReporte.mostrarReportes("reporteCliente.jasper", "Reporte de los clientes", parametro);
     }
 
     public void actualizar() {
@@ -439,7 +450,7 @@ public class MenuProductoController implements Initializable {
             producto.setPrecioCompra(Double.parseDouble(txtPrecioCompra.getText()));
             producto.setCategoriaProductosId(((CategoriaProducto) cmbCategoriaP.getSelectionModel().getSelectedItem()).getCategoriaProductosId());
             producto.setDistribuidorId(((Proveedor) cmbIdProveedores.getSelectionModel().getSelectedItem()).getCodigoProveedor());
-           // byte[] imagenBytes = cargarImagen();
+            // byte[] imagenBytes = cargarImagen();
             procedimiento.setInt(1, producto.getProductoId());
             procedimiento.setString(2, producto.getNombreProducto());
             procedimiento.setString(3, producto.getDescripcionProducto());
