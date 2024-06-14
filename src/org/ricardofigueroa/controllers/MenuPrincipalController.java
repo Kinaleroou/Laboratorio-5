@@ -1,8 +1,8 @@
 package org.ricardofigueroa.controllers;
+
 /**
- * Nombre: Ricardo Figueroa 
- * Fecha de creacion: 11/04/2024 
- * Ultmia Fecha de edicion : 26/04/2024
+ * Nombre: Ricardo Figueroa Fecha de creacion: 11/04/2024 Ultmia Fecha de
+ * edicion : 26/04/2024
  *
  */
 import java.net.URL;
@@ -17,6 +17,8 @@ public class MenuPrincipalController implements Initializable {
 
     private Main escenarioPrincipal;
 
+    @FXML
+    MenuItem btnFacturas;
     @FXML
     MenuItem btnClientes;
     @FXML
@@ -57,6 +59,8 @@ public class MenuPrincipalController implements Initializable {
             escenarioPrincipal.menuEmpleadoView();
         } else if (event.getSource() == btnCompras) {
             escenarioPrincipal.menuCompraView();
+        } else if (event.getSource() == btnFacturas) {
+            escenarioPrincipal.MenuFacturaView();
         }
     }
 

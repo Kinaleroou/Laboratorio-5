@@ -25,6 +25,7 @@ import org.ricardofigueroa.controllers.MenuProveedoresController;
 import org.ricardofigueroa.controllers.MenuCategoriaProductoController;
 import org.ricardofigueroa.controllers.MenuDetalleCompraController;
 import org.ricardofigueroa.controllers.MenuEmailProveedorController;
+import org.ricardofigueroa.controllers.MenuFacturaController;
 import org.ricardofigueroa.controllers.MenuTelefonoProveedorController;
 
 /**
@@ -165,6 +166,15 @@ public class Main extends Application {
     public void MenuDetalleCompraView() {
         try {
             MenuDetalleCompraController menuPrincipal = (MenuDetalleCompraController) cambiarEscena("MenuDetalleCompraView.fxml", 922, 581);
+            menuPrincipal.setEscenarioPrincipal(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+        public void MenuFacturaView() {
+        try {
+            MenuFacturaController menuPrincipal = (MenuFacturaController) cambiarEscena("MenuFacturaView.fxml", 777, 464);
             menuPrincipal.setEscenarioPrincipal(this);
         } catch (Exception e) {
             e.printStackTrace();

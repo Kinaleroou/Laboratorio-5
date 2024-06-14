@@ -1238,3 +1238,10 @@ call sp_AgregarDetalleFactura(1, 1, 1);
 call sp_ListarDetalleFactura();
 call sp_BuscarDetalleFactura(1);
 call sp_EditarDetalleFactura(1, 1, 1);
+
+SELECT * 
+FROM DetalleFactura
+JOIN Facturas ON DetalleFactura.facturaId = Facturas.facturaId
+JOIN Clientes ON Facturas.clienteId = Clientes.codigoCliente
+JOIN Productos ON DetalleFactura.productoId = Productos.productoId
+WHERE Facturas.facturaId = 1;

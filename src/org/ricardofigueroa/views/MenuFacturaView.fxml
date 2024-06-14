@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="777.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ricardofigueroa.controllers.MenuFacturaController">
+   <children>
+      <ImageView fitHeight="464.0" fitWidth="777.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/fondo.jpeg" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnReportesF" layoutX="305.0" layoutY="155.0" mnemonicParsing="false" onAction="#reporte" prefHeight="127.0" prefWidth="167.0" text="Generar Factura" />
+      <Label layoutX="28.0" layoutY="25.0" prefHeight="50.0" prefWidth="207.0" text="Factura">
+         <font>
+            <Font size="38.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
