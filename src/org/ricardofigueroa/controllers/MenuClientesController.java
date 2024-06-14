@@ -266,8 +266,8 @@ public class MenuClientesController implements Initializable {
                 btnAgregarC.setDisable(false);
                 btnEliminarC.setDisable(false);
                 btnEditarC.setDisable(false);
-                imgEditarC.setImage(new Image("/org/ricardofigueroa/images/editarClientes.png"));
-                imgReportesC.setImage(new Image("/org/ricardofigueroa/images/reportecliente.png"));
+                //imgEditarC.setImage(new Image("/org/ricardofigueroa/images/editarClientes.png"));
+                //imgReportesC.setImage(new Image("/org/ricardofigueroa/images/reportecliente.png"));
                 tipoOperaciones = operaciones.NINGUNO;
                 cargarDatos();
                 break;
@@ -277,7 +277,7 @@ public class MenuClientesController implements Initializable {
     public void imprimirReporte(){
         Map parametro = new HashMap();
         parametro.put("codigoCliente", null);
-        generarReporte.mostrarReportes("report1.jasper", "Reporte de los clientes", parametro);
+        generarReporte.mostrarReportes("reporteCliente.jasper", "Reporte de los clientes", parametro);
     }
 
     public void actualizar() {
