@@ -435,7 +435,7 @@ public class MenuProductoController implements Initializable {
 
     public void imprimirReporte() {
         Map parametro = new HashMap();
-        parametro.put("codigoCliente", null);
+        parametro.put("productoId", null);
         generarReporte.mostrarReportes("reporteProductos.jasper", "Reporte de los clientes", parametro);
     }
 
